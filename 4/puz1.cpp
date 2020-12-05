@@ -3,14 +3,18 @@
 using namespace std;
 
 map<string, string> fields;
-string hairColors[7] = {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"};
+string eyeColors[7] = {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"};
+int tC = 0;
 
 int C = 0;
 
 bool validate() {
 	int D = 0;
+	tC++;
 	for(auto &f : fields){
 		if(f.second.size()) {
+			try {
+
 			if(f.first == "byr" && stoi(f.second)>=1920 && stoi(f.second)<=2002) D++;
 			if(f.first == "iyr" && stoi(f.second)>=2010 && stoi(f.second)<=2020) D++;
 			if(f.first == "eyr" && stoi(f.second)>=2020 && stoi(f.second)<=2030) D++;
@@ -25,6 +29,10 @@ bool validate() {
 					if(val>=59 && val <=76) D++;
 				}
 			}
+
+			} catch(exception e) {
+
+			}
 			if(f.first == "hcl") {
 				if(f.second.size() == 7 && f.second[0] == '#') {
 					int d = 0;
@@ -36,7 +44,7 @@ bool validate() {
 				}
 			}
 			if(f.first == "ecl") {
-				for(auto c : hairColors) {
+				for(auto c : eyeColors) {
 					if(c == f.second) {
 						D++;
 						break;
@@ -47,14 +55,14 @@ bool validate() {
 				if(f.second.size() == 9) {
 					int d= 0;
 					for(int i = 0; i <9; i++) {
-						if(f.second[i] > '0' && f.second[i] <='9') d++;
+						if(f.second[i] >= '0' && f.second[i] <='9') d++;
 					}
 					if (d==9) D++;
 				}
 			}
 			if(f.first == "cid") D++;
 		}
-		f.second = "";
+		f.second = " ";
 	}
 	if(8==D) {
 		C++;
@@ -73,7 +81,7 @@ int main() {
 	fields["hcl"]="";
 	fields["ecl"]="";
 	fields["pid"]="";
-	fields["cid"]="";
+	fields["cid"]="dajdljasdl";
 
 
 	while(inp.peek()!=EOF) {
